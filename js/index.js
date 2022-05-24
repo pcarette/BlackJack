@@ -1,7 +1,15 @@
+//need to initialize prompt sync to test the game in JS console
 const prompt = require('prompt-sync')();
+
+//Now we declare the variables to build the game :
 const suits = ["Coeur", "Carreau", "Pique", "Trefle"];
 const values = ["As", 2, 3, 4, 5, 6, 7, 8, 9, 10, "V", "D", "R"];
 let gameDeck = [];
+let dealerVictories = 0;
+let playerVictories = 0;
+let ties = 0;
+
+// Those 2 fonctions are necessay to shuffle our 6 decks of cards :
 function fisherYatesShuffle(arr) {
     for (let i = arr.length; i > 0; i--) {
       const j = Math.floor(Math.random() * i)
@@ -19,6 +27,8 @@ function getRandomSelection(n, array) {
     return selected
   }
 
+//We build a Card class to build our cards
+
 class Card {
     constructor(suit, value) {
         this.suit = suit;
@@ -34,6 +44,8 @@ class Card {
     }
 }
 
+//Then we make our deck
+
 function makeADeck() {
     let deck = [];
     for (let i = 0; i < suits.length; ++i) {
@@ -43,6 +55,9 @@ function makeADeck() {
         }
     } return deck;
 }
+
+//for this game, we will reinitialize our decks each round, but to avoid predictibility
+//we will shuffle 6 decks of cards :
 
 function initializeAGame() {
     for (let i = 0; i < 6; ++i) {
@@ -88,18 +103,32 @@ pickCardDealer() {
     this.dealersScore += this.dealersDeck[this.dealersDeck.length-1].power;
     console.log(`The dealer is now at ${this.dealersScore}.`);
 }
+pickWithoutDisplayDealer() {
+    this.dealersDeck.push(this.tableDeck.pop());
+}
+
+revealDealer() {
+    this.dealersScore = 0;
+    for (let i = 0; i < this.dealersDeck.length; ++i) {
+        this.dealersScore += this.dealersDeck[i].power
+    }
+}
+
+playersMove() {
+    let myGame = prompt("Do you want an additional card ?");
+    if (myGame == "Y" ||myGame == "y") {
+        pickCardPlayer();
+        console.log("Your score : ", this.playerScore)
+    } else if (myGame == "N" || myGame == "n") {
+        break;
+    }
+}
 
 }
 // The game interface :
 newGame = new Game;
-newGame
-   let myGame = prompt("Voulez vous tirer une nouvelle carte ?");
-    if (myGame == "Y" ||myGame == "y") {
-        newGame.pickCardPlayer();
-        console.log("Your score : ", this.playerScore)
-    } else if (myGame == "N" || myGame == "n") {
-        newGame.pickCardDealer();
-    }
+
+   
  
 
 
