@@ -1,6 +1,13 @@
 //need to initialize prompt sync to test the game in JS console
-const prompt = require('prompt-sync')();
+//const prompt = require('prompt-sync')();
 
+const startGame = document.getElementById("start-game");
+const menuDisplayer = document.querySelector(".menu-displayer");
+const damier = document.querySelector(".damier");
+startGame.addEventListener("click", () => {
+    menuDisplayer.classList.add("hidden");
+    damier.classList.remove("hidden");
+})
 //Now we declare the variables to build the game :
 const suits = ["Coeur", "Carreau", "Pique", "Trefle"];
 const values = ["As", 2, 3, 4, 5, 6, 7, 8, 9, 10, "V", "D", "R"];
@@ -59,78 +66,24 @@ function makeADeck() {
 //for this game, we will reinitialize our decks each round, but to avoid predictibility
 //we will shuffle 6 decks of cards :
 
-function initializeAGame() {
+function make6Decks() {
     for (let i = 0; i < 6; ++i) {
         gameDeck.push(makeADeck());
     }
     gameDeck = gameDeck.flat()
 }
 
-initializeAGame();
+make6Decks();
 
-function pickCards() {
+function shuffleDeck() {
     return getRandomSelection(gameDeck.length, gameDeck)
 }
 
 // console.log(pickCards())
 // console.log(gameDeck.length);
-console.log(pickCards())
+console.log(shuffleDeck())
 // console.log(gameDeck.length);
 
-class Game {
-constructor() {
-this.tableDeck = pickCards(); 
-this.dealersScore = 0;
-this.playerScore = 0;
-this.playersDeck = [];
-this.dealersDeck = [];
-}
-
-throwACard() {
-    this.tableDeck.pop()
-}
-
-pickCardPlayer() {
-    this.playersDeck.push(this.tableDeck.pop());
-    console.log(this.playersDeck);
-    this.playerScore += this.playersDeck[this.playersDeck.length-1].power;
-    console.log(`You're now at ${this.playerScore}, do you want to pick another card ?`);
-}
-
-pickCardDealer() {
-    this.dealersDeck.push(this.tableDeck.pop());
-    console.log(this.dealersDeck);
-    this.dealersScore += this.dealersDeck[this.dealersDeck.length-1].power;
-    console.log(`The dealer is now at ${this.dealersScore}.`);
-}
-pickWithoutDisplayDealer() {
-    this.dealersDeck.push(this.tableDeck.pop());
-}
-
-revealDealer() {
-    this.dealersScore = 0;
-    for (let i = 0; i < this.dealersDeck.length; ++i) {
-        this.dealersScore += this.dealersDeck[i].power
-    }
-}
-
-playersMove() {
-    let myGame = prompt("Do you want an additional card ?");
-    if (myGame == "Y" ||myGame == "y") {
-        pickCardPlayer();
-        console.log("Your score : ", this.playerScore)
-    } else if (myGame == "N" || myGame == "n") {
-        break;
-    }
-}
-
-}
 // The game interface :
-newGame = new Game;
-
-   
- 
-
-
-// STDIN("Why???")
+const newGame = new Game();
 
