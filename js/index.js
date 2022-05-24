@@ -41,6 +41,7 @@ class Card {
         this.suit = suit;
         this.value = value;
         this.power;
+        this.image
         if (typeof value === "number") {
             this.power = value;
         } else if (value === "V" || value === "D" || value === "R") {

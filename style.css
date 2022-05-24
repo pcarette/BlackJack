@@ -5,6 +5,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: url(/BlackJack/images/background.jpg);
+  background-size: auto;
+  backdrop-filter: blur(5px);
+  margin: 0%;
 }
 
 
@@ -23,14 +27,18 @@ footer {
 
 .menu-displayer {
   display: flex;
+  
   justify-content: center;
   flex-direction: column;
 }
 
 .damier {
+  display: flex;
+  flex-direction: column;
   background: green;
-  height: 40vh;
+  height: 50vh;
   width: 80vw;
+  padding: 20px;
 }
 
 .hidden {
@@ -46,4 +54,10 @@ footer {
   height: 123px;
   width: 78px;
   background-color: beige;
+}
+
+.choices {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
 }

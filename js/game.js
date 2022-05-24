@@ -1,46 +1,62 @@
+class Player {
+    constructor() {
+        this.score = 0;
+        this.deck = [];
+    }
+    pickCard(card) {
+        this.deck.push(card);
+        console.log(this.deck);
+        this.score += this.deck[this.deck.length-1].power;
+        console.log(`You're now at ${this.score}, do you want to pick another card ?`);
+    }
+}
+class Dealer {
+    constructor() {
+        this.score = 0;
+        this.deck = [];
+    } 
+    pickCardDealer(card) {
+        this.deck.push(card);
+        console.log(this.deck);
+        this.dealer.score += this.deck[this.deck.length-1].power;
+        console.log(`The dealer is now at ${this.score}.`);
+    }
+}
+
 class Game {
     constructor() {
-    this.tableDeck = shuffleDeck(); 
-    this.dealersScore = 0;
-    this.playerScore = 0;
-    this.playersDeck = [];
-    this.dealersDeck = [];
+        this.tableDeck = shuffleDeck(); 
+        this.dealer = new Dealer();
+        this.player = new Player();
     }
     
     throwACard() {
         this.tableDeck.pop()
     }
     
-    pickCardPlayer() {
-        this.playersDeck.push(this.tableDeck.pop());
-        console.log(this.playersDeck);
-        this.playerScore += this.playersDeck[this.playersDeck.length-1].power;
-        console.log(`You're now at ${this.playerScore}, do you want to pick another card ?`);
+    removeTopCard() {
+        return this.tableDeck.pop();
     }
-    
-    pickCardDealer() {
-        this.dealersDeck.push(this.tableDeck.pop());
-        console.log(this.dealersDeck);
-        this.dealersScore += this.dealersDeck[this.dealersDeck.length-1].power;
-        console.log(`The dealer is now at ${this.dealersScore}.`);
-    }
+
+   
     pickWithoutDisplayDealer() {
-        this.dealersDeck.push(this.tableDeck.pop());
+        this.dealer.deck.push(this.tableDeck.pop());
     }
     
     revealDealer() {
-        this.dealersScore = 0;
-        for (let i = 0; i < this.dealersDeck.length; ++i) {
-            this.dealersScore += this.dealersDeck[i].power
+        this.dealer.score = 0;
+        for (let i = 0; i < this.dealer.deck.length; ++i) {
+            this.dealer.score += this.dealer.deck[i].power
         }
     }
     
-    playersMove() {
-        let myGame = prompt("Do you want an additional card ?");
-        if (myGame == "Y" ||myGame == "y") {
-            pickCardPlayer();
-            console.log("Your score : ", this.playerScore)
-        } 
+    playTheGame() {
+        this.pickCardPlayer(this.removeTopCard());
+        this.pickCardDealer(this.removeTopCard());
+        this.pickCardPlayer(this.removeTopCard());
+        this.pickWithoutDisplayDealer();
+        let callPlayer = prompt("")
+        if (callPlayer == "Y" ){}
     }
     
     }
