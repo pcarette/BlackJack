@@ -1,10 +1,12 @@
 //Now we declare the variables to build the game :
-const suits = ["Coeur", "Carreau", "Pique", "Trefle"];
-const values = ["As", 2, 3, 4, 5, 6, 7, 8, 9, 10, "V", "D", "R"];
+const suits = ["h", "d", "c", "s"];
+const values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
 let gameDeck = [];
 let dealerVictories = 0;
 let playerVictories = 0;
 let ties = 0;
+
+
 
 // Those 2 fonctions are necessay to shuffle our 6 decks of cards :
 function fisherYatesShuffle(arr) {
@@ -31,10 +33,11 @@ class Card {
         this.suit = suit;
         this.value = value;
         this.power;
-        this.image;
+        this.image = new Image()
+        this.image.src = `./cartes-gif/${this.value}${this.suit}.gif`;
         if (typeof value === "number") {
             this.power = value;
-        } else if (value === "V" || value === "D" || value === "R") {
+        } else if (value === "J" || value === "Q" || value === "K") {
             this.power = 10;
         } else {
             this.power = 1;
@@ -79,25 +82,27 @@ class Player {
         this.score = 0;
         this.deck = [];
     }
-    pickCard(card) {
+    
+    trackScore() {
+        console.log('trackscore');
+        this.score = 0;
+        this.deck.forEach(card => {
+            this.score+=card.power
+        });
+        console.log(this.score);
+    }
+    
+    pickCard(card=this.removeTopCard()) {
         this.deck.push(card);
         console.log(this.deck);
-        this.score += this.deck[this.deck.length-1].power;
         console.log(`You're now at ${this.score}, do you want to pick another card ?`);
     }
 }
-class Dealer {
+class Dealer extends Player {
     constructor() {
-        this.score = 0;
-        this.deck = [];
+        super()
     } 
-    pickCard(card) {
-        this.deck.push(card);
-        console.log(this.deck);
-        this.score += this.deck[this.deck.length-1].power;
-        console.log(`The dealer is now at ${this.score}.`);
-    }
-
+   
     pickWithoutDisplay(card) {
         this.deck.push(card);
     }
@@ -131,8 +136,21 @@ class Game {
         this.player.pickCard(this.removeTopCard());
         this.dealer.pickCard(this.removeTopCard());
         this.player.pickCard(this.removeTopCard());
+        this.player.trackScore();
+        this.dealer.trackScore();
         this.dealer.pickWithoutDisplay(this.removeTopCard());
-        
+        let suspense = this.dealer.deck[0];
+        if (this.player.score <= 11 && this.player.deck.includes(Element.value === 1)){
+            this.player.score += 10;
+        }
     }
-    
+    dealerMove() {
+        while (this.dealer.trackScore() < 17) {
+            this.dealer.pickCard();
+        }
+
     }
+    }
+//const hiddenFaceCard = new Card(null, null);
+
+// hiddenFaceCard.image = ""
