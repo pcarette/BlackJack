@@ -149,6 +149,8 @@ class Game {
             dealerVictories++
             return "You lose"
         } else {
+            dealerVictories++
+            playerVictories++
             return "It's a tie"
         }
     }

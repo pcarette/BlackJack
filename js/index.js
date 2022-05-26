@@ -12,7 +12,8 @@ const stayButton = document.querySelector(".Stay");
 const userMessage = document.querySelector(".user-message").lastChild
 const modalWrapped = document.querySelector(".wrapper");
 const retryButton = document.getElementById("retry");
-
+const playerTitle = document.querySelector(".player-title");
+const dealerTitle = document.querySelector(".dealer-title")
 
 
 startGame.addEventListener("click", () => {
@@ -54,8 +55,9 @@ function giveCard() {
 }
 
 hitButton.addEventListener("click", () => {
-    if (newGame.player.deck.length === 5) {
+    if (newGame.player.deck.length > 4 && newGame.player.getScore() < 21) {
         userMessage.textContent = `You can't pick more cards, it's on the dealer.`;
+        stayButton.click();
         while (newGame.dealer.getScore() < 17) {
             let i = newGame.dealer.deck.length;
             setTimeout(() => assignImageDealer(i, newGame.dealer), (500 *(i +1)) );
@@ -65,12 +67,12 @@ hitButton.addEventListener("click", () => {
     let rangePlayer = newGame.player.deck.length;
     newGame.player.pickCard(newGame.removeTopCard(newGame.removeTopCard()));
     assignImagePlayer(rangePlayer);
-
     userMessage.textContent = `You're now at ${newGame.player.getScore()}, do you hit or stay ?`;
     if (newGame.player.getScore() > 21) {
         userMessage.textContent = `You're over 21 (${newGame.player.getScore()}), you lose.`;
         setTimeout(() => {
             newGame.displayEndMessage('lose');
+            dealerVictories++;
         }, 1000)
         
     }
@@ -97,13 +99,17 @@ function nextStep() {
         setTimeout(() => {
             if (newGame.dealer.getScore() < newGame.player.getScore() && newGame.player.getScore() <= 21) {
                 newGame.displayEndMessage("win");
-    
+                playerVictories++;
             } else if ((newGame.dealer.getScore() > newGame.player.getScore() && newGame.dealer.getScore() <= 21)) {
                 newGame.displayEndMessage("lose");
+                dealerVictories++
             } else if (newGame.dealer.getScore() > 21) {
                 newGame.displayEndMessage("win");
+                playerVictories++;
             } else {
                 newGame.displayEndMessage("tie")
+                playerVictories++;
+                dealerVictories++;
             }
         }, 1000)
     }
@@ -121,4 +127,6 @@ retryButton.addEventListener("click", () => {
     newGame = new Game();
     modalWrapped.classList.add("hidden");
     startGame.click()
+    dealerTitle.textContent = `Dealer's cards - Score : ${dealerVictories}`
+    playerTitle.textContent = `Player's cards - Score : ${playerVictories}`
 })
