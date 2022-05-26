@@ -33,7 +33,7 @@ class Card {
         this.value = value;
         this.power;
         this.image = new Image()
-        this.image.src = `./cartes-gif/${this.value}${this.suit}.gif`;
+        this.image.src = `./images/cartes-gif/${this.value}${this.suit}.gif`;
         if (typeof value === "number") {
             this.power = value;
         } else if (value === "J" || value === "Q" || value === "K") {
