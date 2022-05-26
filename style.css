@@ -10,7 +10,14 @@ body {
   backdrop-filter: blur(5px);
   margin: 0%;
 }
+section {
+  display: flex;
+  justify-content: space-around;
+}
 
+h1 {
+  font-size: 200%;
+}
 
 nav {
   display: flex;
@@ -23,15 +30,37 @@ footer {
   bottom: 0;
   display: flex;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.268);
+  background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
 }
 
 .menu-displayer {
+  position: absolute;
+  top: 40vh;
   display: flex;
-  
   justify-content: center;
   flex-direction: column;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 53vw;
+  height: 18vh;
+  font-size: 1.12em;
+  border-radius : 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#start-game {
+  background-color: white; /* Black */
+  border: none;
+  color: black;
+  padding: 8px 27px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 10px;
 }
 
 .damier { 
@@ -45,10 +74,6 @@ footer {
   box-shadow: 20px 20px 25px 13px rgb(0 0 45 / 58%);
 }
 
-
-.hidden {
-  display :none;
-}
 
 .my-five-cards {
   display: flex;
@@ -75,4 +100,54 @@ footer {
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
+}
+
+.choose {
+  background-color: #000000; /* Black */
+  border: none;
+  color: white;
+  padding: 8px 27px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.user-message {
+  color: white;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 50vw;
+  height: 20vh;
+  border-radius : 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hidden {
+  display :none;
+}
+
+#retry {
+  background-color: white; /* Black */
+  border: none;
+  color: black;
+  padding: 8px 27px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 10px;
 }

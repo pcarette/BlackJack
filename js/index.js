@@ -27,6 +27,12 @@ function assignImagePlayer(slot, gamer=newGame.player) {
     let card = document.querySelector(`.card-slot.player-${slot+1}`)
     card.append(gamer.deck[slot].image);
     userMessage.textContent = `The dealer is now at ${newGame.dealer.getScore()}, you are at ${newGame.player.getScore()}`
+    if (newGame.player.getScore() === 21) {
+        userMessage.textContent = "You have BlackJack, it's dealer's turn."
+        setTimeout(() => {
+           stayButton.click(); 
+        }, 2000) 
+    } 
 }
 function assignImageDealer(slot, gamer=newGame.dealer) {
     let card = document.querySelector(`.card-slot.dealer-${slot+1}`)
@@ -62,7 +68,11 @@ hitButton.addEventListener("click", () => {
 
     userMessage.textContent = `You're now at ${newGame.player.getScore()}, do you hit or stay ?`;
     if (newGame.player.getScore() > 21) {
-        newGame.displayEndMessage('lose');
+        userMessage.textContent = `You're over 21 (${newGame.player.getScore()}), you lose.`;
+        setTimeout(() => {
+            newGame.displayEndMessage('lose');
+        }, 1000)
+        
     }
     }
 })
@@ -95,7 +105,7 @@ function nextStep() {
             } else {
                 newGame.displayEndMessage("tie")
             }
-        }, 3000)
+        }, 1000)
     }
 }
 
