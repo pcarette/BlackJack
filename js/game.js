@@ -7,7 +7,6 @@ let playerVictories = 0;
 let ties = 0;
 
 
-
 // Those 2 fonctions are necessay to shuffle our 6 decks of cards :
 function fisherYatesShuffle(arr) {
     for (let i = arr.length; i > 0; i--) {
@@ -84,15 +83,15 @@ class Player {
     }
     
     trackScore() {
-        console.log('trackscore');
         this.score = 0;
         this.deck.forEach(card => {
             this.score+=card.power
         });
-        console.log(this.score);
+        return this.score;
     }
     
-    pickCard(card=this.removeTopCard()) {
+    pickCard(card) {
+        console.log("ttttttt");
         this.deck.push(card);
         console.log(this.deck);
         console.log(`You're now at ${this.score}, do you want to pick another card ?`);
@@ -104,7 +103,7 @@ class Dealer extends Player {
     } 
    
     pickWithoutDisplay(card) {
-        this.deck.push(card);
+    this.deck.push(card);
     }
     
     calculateScore() {
@@ -138,17 +137,11 @@ class Game {
         this.player.pickCard(this.removeTopCard());
         this.player.trackScore();
         this.dealer.trackScore();
-        this.dealer.pickWithoutDisplay(this.removeTopCard());
+        this.dealer.pickWithoutDisplay(this.removeTopCard(this.removeTopCard()));
         let suspense = this.dealer.deck[0];
-        if (this.player.score <= 11 && this.player.deck.includes(Element.value === 1)){
+        if (this.player.score <= 11 && this.player.deck.some(card => card.value === 1)){
             this.player.score += 10;
         }
-    }
-    dealerMove() {
-        while (this.dealer.trackScore() < 17) {
-            this.dealer.pickCard();
-        }
-
     }
     }
 //const hiddenFaceCard = new Card(null, null);

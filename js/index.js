@@ -27,6 +27,8 @@ function assignImagePlayer(slot, gamer=newGame.player) {
 }
 function assignImageDealer(slot, gamer=newGame.dealer) {
     let card = document.querySelector(`.card-slot.dealer-${slot+1}`)
+    console.log(gamer.deck)
+    console.log(slot);
     card.append(gamer.deck[slot].image);
 }
 function giveCard(player) {
@@ -45,11 +47,30 @@ messageDisplayer = setInterval(()=>{
 hitButton.addEventListener("click", () => {
     if (newGame.player.deck.length === 5) {
         clearInterval(messageDisplayer);
-        userMessage.textContent = `You can't pick more cards, let the dealer play`;
-    }
+        userMessage.textContent = `You can't pick more cards, it's on the dealer.`;
+        while (newGame.dealer.trackScore() < 17) {
+            let i = newGame.dealer.deck.length;
+            setTimeout(() => assignImageDealer(i, newGame.dealer), (500 *(i +1)) );
+            newGame.dealer.pickCard(newGame.removeTopCard());
+        }
+    } else {
     let rangePlayer = newGame.player.deck.length;
-    newGame.player.pickCard(newGame.removeTopCard());
+    newGame.player.pickCard(newGame.removeTopCard(newGame.removeTopCard()));
     assignImagePlayer(rangePlayer);
-    newGame.player.trackScore()
-    console.log('prout');
+    newGame.player.trackScore();
+    }
+})
+
+stayButton.addEventListener("click", () => {
+
+    while (newGame.dealer.trackScore() < 17 && newGame.dealer.deck.length < 5) {
+        let i = newGame.dealer.deck.length;
+        setTimeout(() => assignImageDealer(i, newGame.dealer), (500 *(i +1)) );
+        newGame.dealer.pickCard(newGame.removeTopCard());
+        console.log(newGame.dealer.deck);
+    }
+    clearInterval(messageDisplayer);
+    messageDisplayer = setInterval(()=>{
+        userMessage.textContent = `The dealer is now at ${newGame.dealer.score}, you are at ${newGame.player.score}`
+    }, 100)
 })
