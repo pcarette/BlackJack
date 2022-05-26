@@ -78,41 +78,42 @@ function shuffleDeck() {
 
 class Player {
     constructor() {
-        this.score = 0;
         this.deck = [];
     }
-    
-    trackScore() {
-        this.score = 0;
+
+    getScore() {
+        let score = 0;
         this.deck.forEach(card => {
-            this.score+=card.power
+            score += card.power
         });
-        return this.score;
+        if (score <= 11 && this.deck.some(card => card.value === "A")){
+            score += 10;
+        }
+        return score;
     }
     
     pickCard(card) {
         console.log("ttttttt");
         this.deck.push(card);
         console.log(this.deck);
-        console.log(`You're now at ${this.score}, do you want to pick another card ?`);
+        console.log(`You're now at ${this.getScore()}, do you want to pick another card ?`);
     }
 }
+
 class Dealer extends Player {
     constructor() {
         super()
-    } 
-   
-    pickWithoutDisplay(card) {
-    this.deck.push(card);
+        this.isShowingCards = false
     }
-    
-    calculateScore() {
-        this.score = 0;
-        for (let i = 0; i < this.deck.length; ++i) {
-            this.score += this.deck[i].power;
+    getScore() {
+        if (!this.isShowingCards) {
+            return this.deck[0].power
         }
+        return super.getScore()
     }
-    
+    startShowingCards() {
+        this.isShowingCards = true
+    }
 }
 
 class Game {
@@ -120,6 +121,7 @@ class Game {
         this.tableDeck = shuffleDeck(); 
         this.dealer = new Dealer();
         this.player = new Player();
+        this.modalWrapped = document.querySelector(".wrapper");
     }
     
     throwACard() {
@@ -135,13 +137,26 @@ class Game {
         this.player.pickCard(this.removeTopCard());
         this.dealer.pickCard(this.removeTopCard());
         this.player.pickCard(this.removeTopCard());
-        this.player.trackScore();
-        this.dealer.trackScore();
-        this.dealer.pickWithoutDisplay(this.removeTopCard(this.removeTopCard()));
-        let suspense = this.dealer.deck[0];
-        if (this.player.score <= 11 && this.player.deck.some(card => card.value === 1)){
-            this.player.score += 10;
+        this.dealer.pickCard(this.removeTopCard());
+    }
+    
+  // A REVOIR !!!  
+    loseOrWinMessage() {
+        if (this.dealer.getScore() < this.player.getScore()) {
+            playerVictories++
+            return "You win"
+        } else if (this.dealer.getScore() > this.player.getScore()) {
+            dealerVictories++
+            return "You lose"
+        } else {
+            return "It's a tie"
         }
+    }
+
+    displayEndMessage(state) {
+        let message = state === 'win' ? 'You win !' : state === 'tie' ? "It's a tie !" : "You lose !"
+        this.modalWrapped.querySelector('h2').textContent =  `The dealer is at ${this.dealer.getScore()}, you are at ${this.player.getScore()}. ${message}`
+        this.modalWrapped.classList.remove('hidden');
     }
     }
 //const hiddenFaceCard = new Card(null, null);
