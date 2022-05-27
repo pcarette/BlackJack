@@ -16,7 +16,9 @@ section {
 }
 
 h1 {
-  font-size: 200%;
+  font-size: 285%;
+  margin-block-end: 10px;
+  margin-block-start: 10px;
 }
 
 nav {
