@@ -93,10 +93,7 @@ class Player {
     }
     
     pickCard(card) {
-        console.log("ttttttt");
         this.deck.push(card);
-        console.log(this.deck);
-        console.log(`You're now at ${this.getScore()}, do you want to pick another card ?`);
     }
 }
 

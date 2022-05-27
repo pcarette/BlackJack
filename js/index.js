@@ -37,8 +37,6 @@ function assignImagePlayer(slot, gamer=newGame.player) {
 }
 function assignImageDealer(slot, gamer=newGame.dealer) {
     let card = document.querySelector(`.card-slot.dealer-${slot+1}`)
-    console.log(gamer.deck);
-    console.log(slot);
     card.append(gamer.deck[slot].image);
     newGame.dealer.deck.slice(0, slot+1) 
     userMessage.textContent = `The dealer is now at ${newGame.dealer.getScore()}, you are at ${newGame.player.getScore()}`
@@ -91,7 +89,6 @@ function nextStep() {
     if (newGame.dealer.getScore() < 17 && newGame.dealer.deck.length < 5) {
         let i = newGame.dealer.deck.length;
         newGame.dealer.pickCard(newGame.removeTopCard());
-        console.log(newGame.dealer.deck);
         assignImageDealer(i, newGame.dealer)
 
         setTimeout(nextStep, 1500)
